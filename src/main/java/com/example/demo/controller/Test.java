@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.context.Constants;
 import com.example.demo.mqtt_ssl.MQTTPublishClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -17,9 +18,12 @@ import java.util.Map;
 @RestController
 public class Test {
 
+//	@Value("${collect_flag}")
+//	private boolean collect_flag;
+
 	@RequestMapping("test")
 	public String test() {
-		return "https test success";
+		return Constants.collect_flag + "";
 	}
 
 	@RequestMapping("publish")
