@@ -11,6 +11,11 @@ public class CalTest {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		System.out.println(sdf.format(new Date()));
+		try {
+			Thread.sleep(1000 * 60 * 3);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		cal.set(Calendar.MILLISECOND,0);
@@ -49,7 +54,7 @@ public class CalTest {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 //        cal.add(cal.DATE, -1* MAX_PCAP_STORE_DAY);  // 数据量太大，由原来的天改为小时
-		cal.add(cal.HOUR_OF_DAY, -1* 1);
+		cal.add(cal.HOUR_OF_DAY, -1* 24 * 7);
 		Date dt = cal.getTime();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -4,15 +4,15 @@ package com.example.demo.mq;
  *  activeMq 状态检测，包含queue和topic
  * Created by admins on 2021/3/18.
  */
+import org.apache.activemq.broker.jmx.BrokerViewMBean;
+import org.apache.activemq.broker.jmx.QueueViewMBean;
+
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-
-import org.apache.activemq.broker.jmx.BrokerViewMBean;
-import org.apache.activemq.broker.jmx.QueueViewMBean;
 
 public class MQStateTest {
 	private BrokerViewMBean mBean = null;
@@ -44,7 +44,7 @@ public class MQStateTest {
 			System.out.println("queueName = " + queueMBean.getName());
 			// 队列中剩余的消息数
 			System.out.println("待消费消息数  = " + queueMBean.getQueueSize());
-			// 消费者数
+			// 消费者数z
 			System.out.println("当前消费者（监听者）= " + queueMBean.getConsumerCount());
 			// 出队数
 			System.out.println("消息出队数 = " + queueMBean.getDequeueCount());

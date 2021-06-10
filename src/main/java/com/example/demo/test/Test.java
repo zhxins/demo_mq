@@ -1,7 +1,7 @@
 package com.example.demo.test;
 
-import java.util.Arrays;
-import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by admins on 2021/2/25.
@@ -9,44 +9,53 @@ import java.util.Vector;
 public class Test {
 
 	/**
-	 * [1,4,2] 3
-	 * [2,4,1] 2
-	 *
-	 * [1,2,3,2,2,2,5,4,2]   2
-	 * @return
+	 * 采用线程池开启多个子线程，主线程等待所有的子线程执行完毕
 	 */
-	public int MoreThanHalfNum_Solution(int [] array) {
+	public static void moreThread() {
+		try {
+			int threadNum = 0;
+			ExecutorService exe = Executors.newFixedThreadPool(20);
+			for (int i = 0; i < 10; i++) {
+				threadNum++;
 
-		int md = 0;
-		for (int i =0; i<array.length; i++) {
-			for (int j=0; j< array.length-1-i; j++) {
-				if (array[j] > array[j+1]) {
-					md = array[j];
-					array[j] = array[j+1];
-					array[j+1] = md;
-				}
+				final int currentThreadNum = threadNum;
+				exe.submit(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							System.out.println("子线程[" + currentThreadNum + "]开启");
+							Thread.sleep(1000*10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}finally{
+							System.out.println("子线程[" + currentThreadNum + "]结束");
+						}
+					}
+				});
 			}
+
+			System.out.println("已经开启所有的子线程");
+			exe.shutdown();
+			System.out.println("shutdown()：启动一次顺序关闭，执行以前提交的任务，但不接受新任务。");
+			while(true){
+				if(exe.isTerminated()){
+					System.out.println("所有的子线程都结束了！");
+					break;
+				}
+				Thread.sleep(1000);
+			}
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}finally{
+			System.out.println("主线程结束");
 		}
-		System.out.println(Arrays.toString(array));
-		return 0;
 	}
 
 
+
 	public static void main(String[] args) {
-
-//		int[] array = new int[]{1, 7, 4, 5, 2 ,3};
-
-//		new Test().MoreThanHalfNum_Solution(array);
-
-
-		String s1 = "aaa";
-		String s2 = "cccx";
-
-		s1 = s1 + s2;
-		s2 = s1.substring(0, s1.length()-s2.length());
-		s1 = s1.substring(s2.length());
-
-		System.out.println(s1+" - "+s2);
-
+		moreThread();
 	}
 }
